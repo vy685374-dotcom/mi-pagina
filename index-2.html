@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Parque Aurora Rosa - Alumbrado Público Inteligente">
+    <meta name="keywords" content="parque, alumbrado inteligente, sostenible, rosa">
+    <title>Parque Aurora Rosa - Alumbrado Público Inteligente</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        :root {
+          --rose-50: #fdf2f8;
+          --rose-100: #fce7f3;
+          --rose-200: #fbcfe8;
+          --rose-300: #f9a8d4;
+          --rose-400: #f472b6;
+          --rose-500: #ec4899;
+          --rose-600: #db2777;
+          --rose-700: #be185d;
+          --rose-800: #9d174d;
+          --rose-900: #831843;
+        }
+
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: linear-gradient(135deg, var(--rose-50) 0%, var(--rose-100) 100%);
+          color: var(--rose-900);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .navbar {
+          background: linear-gradient(90deg, var(--rose-600) 0%, var(--rose-500) 100%);
+          color: white;
+          padding: 1rem 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 4px 15px rgba(219, 39, 119, 0.3);
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+          font-weight: bold;
+          letter-spacing: 1px;
+        }
+
+        .nav-buttons {
+          display: flex;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+        }
+
+        .nav-btn {
+          background: rgba(255, 255, 255, 0.2);
+          border: 2px solid white;
+          color: white;
+          padding: 0.6rem 1.2rem;
+          border-radius: 25px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          font-size: 0.9rem;
+        }
+
+        .nav-btn:hover {
+          background: white;
+          color: var(--rose-600);
+          transform: scale(1.05);
+        }
+
+        .nav-btn.active {
+          background: white;
+          color: var(--rose-600);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+          flex: 1;
+          max-width: 1000px;
+          margin: 2rem auto;
+          width: 100%;
+          padding: 0 1rem;
+        }
+
+        .section {
+          background: white;
+          border-radius: 15px;
+          padding: 3rem;
+          box-shadow: 0 8px 32px rgba(219, 39, 119, 0.15);
+          animation: fadeIn 0.5s ease;
+          display: none;
+        }
+
+        .section.active {
+          display: block;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .section h1 {
+          color: var(--rose-700);
+          font-size: 2.5rem;
+          margin-bottom: 0.5rem;
+          text-align: center;
+          text-shadow: 2px 2px 4px rgba(219, 39, 119, 0.1);
+        }
+
+        .section h2 {
+          color: var(--rose-600);
+          font-size: 2rem;
+          margin-bottom: 2rem;
+          text-align: center;
+          border-bottom: 3px solid var(--rose-300);
+          padding-bottom: 1rem;
+        }
+
+        .location {
+          text-align: center;
+          font-size: 1.1rem;
+          color: var(--rose-600);
+          margin-bottom: 2rem;
+          font-weight: 500;
+        }
+
+        .gallery {
+          display: flex;
+          gap: 2rem;
+          justify-content: center;
+          margin: 2rem 0;
+          flex-wrap: wrap;
+        }
+
+        .gallery img {
+          width: 300px;
+          height: 225px;
+          border-radius: 12px;
+          object-fit: cover;
+          box-shadow: 0 8px 20px rgba(219, 39, 119, 0.25);
+          transition: transform 0.3s ease, filter 0.3s ease;
+          border: 3px solid var(--rose-200);
+        }
+
+        .gallery img:hover {
+          transform: scale(1.05) rotate(-1deg);
+          filter: brightness(1.1);
+        }
+
+        .video-container {
+          display: flex;
+          justify-content: center;
+          margin: 2rem 0;
+        }
+
+        .video-container iframe {
+          width: 100%;
+          max-width: 560px;
+          height: 315px;
+          border-radius: 12px;
+          box-shadow: 0 8px 20px rgba(219, 39, 119, 0.25);
+          border: 3px solid var(--rose-200);
+        }
+
+        .faq-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .faq-item {
+          background: linear-gradient(135deg, var(--rose-50) 0%, var(--rose-100) 100%);
+          border-left: 5px solid var(--rose-500);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        .faq-button {
+          width: 100%;
+          background: linear-gradient(90deg, var(--rose-300) 0%, var(--rose-200) 100%);
+          border: none;
+          padding: 1.2rem;
+          text-align: left;
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--rose-800);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .faq-button::after {
+          content: '?';
+          transition: transform 0.3s ease;
+          font-size: 0.8rem;
+        }
+
+        .faq-button:hover {
+          background: linear-gradient(90deg, var(--rose-400) 0%, var(--rose-300) 100%);
+          padding-left: 1.5rem;
+        }
+
+        .faq-item.active .faq-button {
+          background: linear-gradient(90deg, var(--rose-500) 0%, var(--rose-400) 100%);
+          color: white;
+        }
+
+        .faq-item.active .faq-button::after {
+          transform: rotate(180deg);
+        }
+
+        .faq-answer {
+          display: none;
+          padding: 1.5rem;
+          background: white;
+        }
+
+        .faq-item.active .faq-answer {
+          display: block;
+        }
+
+        .faq-answer p {
+          margin-bottom: 1rem;
+          line-height: 1.6;
+          color: var(--rose-800);
+        }
+
+        .faq-answer img {
+          width: 100%;
+          max-width: 400px;
+          height: 250px;
+          border-radius: 8px;
+          object-fit: cover;
+          margin-top: 1rem;
+          box-shadow: 0 4px 12px rgba(219, 39, 119, 0.2);
+          border: 2px solid var(--rose-200);
+        }
+
+        .opinion-form {
+          background: linear-gradient(135deg, var(--rose-50) 0%, var(--rose-100) 100%);
+          padding: 2rem;
+          border-radius: 12px;
+          border: 2px solid var(--rose-200);
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        .form-group {
+          margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+          display: block;
+          font-weight: 600;
+          color: var(--rose-700);
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+          width: 100%;
+          padding: 0.8rem;
+          border: 2px solid var(--rose-300);
+          border-radius: 8px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          font-size: 1rem;
+          transition: border-color 0.3s ease;
+          background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+          outline: none;
+          border-color: var(--rose-500);
+          box-shadow: 0 0 8px rgba(236, 72, 153, 0.2);
+        }
+
+        .star-rating {
+          display: flex;
+          gap: 0.5rem;
+          font-size: 2.5rem;
+          margin: 1rem 0;
+        }
+
+        .star {
+          cursor: pointer;
+          transition: transform 0.2s ease, filter 0.2s ease;
+          filter: grayscale(100%);
+          opacity: 0.5;
+        }
+
+        .star:hover,
+        .star.active {
+          filter: grayscale(0%);
+          opacity: 1;
+          transform: scale(1.2);
+        }
+
+        .rating-text {
+          color: var(--rose-600);
+          font-weight: 600;
+          margin-top: 0.5rem;
+        }
+
+        .submit-btn {
+          width: 100%;
+          background: linear-gradient(90deg, var(--rose-500) 0%, var(--rose-600) 100%);
+          color: white;
+          border: none;
+          padding: 1rem;
+          font-size: 1.1rem;
+          font-weight: 700;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(219, 39, 119, 0.3);
+        }
+
+        .submit-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(219, 39, 119, 0.4);
+        }
+
+        .submit-btn:active {
+          transform: translateY(0);
+        }
+
+        .success-message {
+          background: linear-gradient(90deg, #86efac 0%, #4ade80 100%);
+          color: white;
+          padding: 1.5rem;
+          border-radius: 8px;
+          text-align: center;
+          font-weight: 600;
+          margin-top: 1.5rem;
+          animation: slideDown 0.5s ease;
+          box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .results-gallery {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          margin-top: 2rem;
+        }
+
+        .results-gallery img {
+          width: 100%;
+          height: 200px;
+          border-radius: 12px;
+          object-fit: cover;
+          box-shadow: 0 8px 20px rgba(219, 39, 119, 0.25);
+          transition: transform 0.3s ease, filter 0.3s ease;
+          border: 3px solid var(--rose-300);
+        }
+
+        .results-gallery img:hover {
+          transform: scale(1.05) rotate(1deg);
+          filter: brightness(1.15);
+        }
+
+        .footer {
+          background: linear-gradient(90deg, var(--rose-700) 0%, var(--rose-600) 100%);
+          color: white;
+          text-align: center;
+          padding: 2rem;
+          margin-top: 3rem;
+          box-shadow: 0 -4px 15px rgba(219, 39, 119, 0.2);
+        }
+
+        .footer p {
+          margin: 0;
+          font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+          .navbar {
+            flex-direction: column;
+            padding: 1rem;
+          }
+
+          .logo {
+            font-size: 1.2rem;
+          }
+
+          .nav-buttons {
+            width: 100%;
+            justify-content: center;
+          }
+
+          .nav-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+          }
+
+          .section {
+            padding: 1.5rem;
+          }
+
+          .section h1 {
+            font-size: 2rem;
+          }
+
+          .section h2 {
+            font-size: 1.5rem;
+          }
+
+          .gallery {
+            gap: 1rem;
+          }
+
+          .gallery img {
+            width: 100%;
+            max-width: 300px;
+          }
+
+          .video-container iframe {
+            height: auto;
+            min-height: 250px;
+          }
+
+          .results-gallery {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          .star-rating {
+            font-size: 2rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .container {
+            margin: 1rem auto;
+          }
+
+          .section h1 {
+            font-size: 1.5rem;
+          }
+
+          .section h2 {
+            font-size: 1.3rem;
+          }
+
+          .results-gallery {
+            grid-template-columns: 1fr;
+          }
+
+          .nav-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+          }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+      <div class="logo">?? Parque Aurora Rosa</div>
+      <div class="nav-buttons">
+        <button class="nav-btn active" data-section="inicio">Inicio</button>
+        <button class="nav-btn" data-section="preguntas">Preguntas</button>
+        <button class="nav-btn" data-section="opinion">Opinión</button>
+        <button class="nav-btn" data-section="resultados">Resultados</button>
+      </div>
+    </nav>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+      
+      <!-- SECCIÓN 1: Inicio -->
+      <section id="inicio" class="section active">
+        <h1>Parque Aurora Rosa</h1>
+        <p class="location">?? Ubicación: Centro Histórico - Zona Verde Premium</p>
+        
+        <div class="gallery">
+          <img src="https://images.unsplash.com/photo-1585721694220-9c4d50c4d68e?w=400&h=300&fit=crop" alt="Parque Aurora Rosa 1">
+          <img src="https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=400&h=300&fit=crop" alt="Parque Aurora Rosa 2">
+        </div>
+        
+        <div class="video-container">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: Preguntas Frecuentes -->
+      <section id="preguntas" class="section">
+        <h2>Preguntas Frecuentes</h2>
+        
+        <div class="faq-container">
+          <div class="faq-item">
+            <button class="faq-button">¿Cómo funciona el alumbrado inteligente?</button>
+            <div class="faq-answer">
+              <p>El sistema de alumbrado inteligente utiliza sensores de movimiento y luminosidad para ajustar automáticamente la intensidad de las luces según las necesidades del parque, optimizando el consumo energético.</p>
+              <img src="https://images.unsplash.com/photo-1609042231979-ab5ac2994b9e?w=400&h=250&fit=crop" alt="Sistema de alumbrado inteligente">
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-button">¿Qué beneficios ambientales tiene?</button>
+            <div class="faq-answer">
+              <p>Reduce la huella de carbono hasta en un 60% gracias a la tecnología LED eficiente y al control automático de energía. Contribuye a la conservación del ecosistema nocturno.</p>
+              <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=250&fit=crop" alt="Beneficios ambientales">
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-button">¿Es seguro para los visitantes?</button>
+            <div class="faq-answer">
+              <p>Sí, el alumbrado garantiza una iluminación uniforme y segura en todo el parque. Los sensores de movimiento detectan presencia y aumentan la luminosidad según sea necesario.</p>
+              <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=400&h=250&fit=crop" alt="Seguridad del parque">
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-button">¿Cuál es el costo de mantenimiento?</button>
+            <div class="faq-answer">
+              <p>El mantenimiento es mínimo gracias a la tecnología IoT integrada. El sistema auto-diagnostica fallos y notifica al equipo técnico, reduciendo costos operativos en un 45%.</p>
+              <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=250&fit=crop" alt="Mantenimiento">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: Opinión y Calificación -->
+      <section id="opinion" class="section">
+        <h2>Comparte tu Opinión</h2>
+        
+        <form id="opinionForm" class="opinion-form">
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="comentario">Comentario:</label>
+            <textarea id="comentario" name="comentario" rows="6" placeholder="Cuéntanos tu experiencia en el Parque Aurora Rosa..." required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Calificación:</label>
+            <div class="star-rating">
+              <span class="star" data-value="1">?</span>
+              <span class="star" data-value="2">?</span>
+              <span class="star" data-value="3">?</span>
+              <span class="star" data-value="4">?</span>
+              <span class="star" data-value="5">?</span>
+            </div>
+            <input type="hidden" id="rating" name="rating" value="0" required>
+            <p class="rating-text" id="ratingText">Selecciona una calificación</p>
+          </div>
+          
+          <button type="submit" class="submit-btn">Enviar Opinión</button>
+        </form>
+        
+        <div id="successMessage" class="success-message" style="display:none;">
+          ? ¡Gracias por tu opinión! Nos alegra mucho tu feedback.
+        </div>
+      </section>
+
+      <!-- SECCIÓN 4: Resultados -->
+      <section id="resultados" class="section">
+        <h2>Resultados</h2>
+        
+        <div class="results-gallery">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop" alt="Logro 1 - Eficiencia Energética">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=300&fit=crop" alt="Logro 2 - Proyecto Completado">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop" alt="Logro 3 - Impacto Ambiental">
+          <img src="https://images.unsplash.com/photo-1559333086-b0a56225a93c?w=400&h=300&fit=crop" alt="Logro 4 - Comunidad">
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2026 Parque Aurora Rosa - Alumbrado Público Inteligente | Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Elementos del DOM
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+        const opinionForm = document.getElementById('opinionForm');
+        const successMessage = document.getElementById('successMessage');
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('rating');
+        const ratingText = document.getElementById('ratingText');
+        const faqButtons = document.querySelectorAll('.faq-button');
+
+        // NAVEGACIÓN SPA
+        navButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const sectionId = btn.getAttribute('data-section');
+            showSection(sectionId);
+            
+            // Actualizar botón activo
+            navButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          });
+        });
+
+        function showSection(sectionId) {
+          sections.forEach(section => {
+            section.classList.remove('active');
+          });
+          
+          const targetSection = document.getElementById(sectionId);
+          if (targetSection) {
+            targetSection.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }
+
+        // CALIFICACIÓN CON ESTRELLAS
+        stars.forEach(star => {
+          star.addEventListener('click', () => {
+            const rating = star.getAttribute('data-value');
+            ratingInput.value = rating;
+            
+            // Actualizar estrellas
+            stars.forEach(s => {
+              if (s.getAttribute('data-value') <= rating) {
+                s.classList.add('active');
+              } else {
+                s.classList.remove('active');
+              }
+            });
+            
+            // Actualizar texto
+            const textos = {
+              '1': '? Necesita mejoras',
+              '2': '?? Algo que mejorar',
+              '3': '??? Bien',
+              '4': '???? Muy bien',
+              '5': '????? Excelente'
+            };
+            ratingText.textContent = textos[rating];
+          });
+          
+          // Efecto hover
+          star.addEventListener('mouseover', () => {
+            const rating = star.getAttribute('data-value');
+            stars.forEach(s => {
+              if (s.getAttribute('data-value') <= rating) {
+                s.style.filter = 'grayscale(0%)';
+                s.style.opacity = '1';
+              } else {
+                s.style.filter = 'grayscale(100%)';
+                s.style.opacity = '0.5';
+              }
+            });
+          });
+        });
+
+        // Restablecer efecto hover
+        document.querySelector('.star-rating').addEventListener('mouseleave', () => {
+          const currentRating = ratingInput.value;
+          stars.forEach(star => {
+            if (star.getAttribute('data-value') <= currentRating) {
+              star.classList.add('active');
+            } else {
+              star.classList.remove('active');
+            }
+          });
+        });
+
+        // FORMULARIO DE OPINIÓN
+        opinionForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          const nombre = document.getElementById('nombre').value;
+          const comentario = document.getElementById('comentario').value;
+          const rating = ratingInput.value;
+          
+          if (rating === '0') {
+            alert('Por favor, selecciona una calificación');
+            return;
+          }
+          
+          // Mostrar mensaje de éxito
+          opinionForm.style.display = 'none';
+          successMessage.style.display = 'block';
+          
+          // Guardar en localStorage (opcional)
+          const opinion = {
+            nombre,
+            comentario,
+            rating,
+            fecha: new Date().toLocaleDateString('es-ES')
+          };
+          
+          let opiniones = JSON.parse(localStorage.getItem('opiniones')) || [];
+          opiniones.push(opinion);
+          localStorage.setItem('opiniones', JSON.stringify(opiniones));
+          
+          console.log('Opinión guardada:', opinion);
+          
+          // Restablecer formulario después de 3 segundos
+          setTimeout(() => {
+            opinionForm.reset();
+            ratingInput.value = '0';
+            ratingText.textContent = 'Selecciona una calificación';
+            stars.forEach(s => s.classList.remove('active'));
+            opinionForm.style.display = 'block';
+            successMessage.style.display = 'none';
+          }, 3000);
+        });
+
+        // ACORDEÓN FAQ
+        faqButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const faqItem = button.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Cerrar otros elementos
+            document.querySelectorAll('.faq-item.active').forEach(item => {
+              if (item !== faqItem) {
+                item.classList.remove('active');
+              }
+            });
+            
+            // Toggle del elemento actual
+            faqItem.classList.toggle('active');
+          });
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+          console.log('? Parque Aurora Rosa - Sitio cargado correctamente');
+        });
+    </script>
+</body>
+</html>
